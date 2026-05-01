@@ -373,6 +373,35 @@ example 2
 
 ---
 
+## SendEmailSharePoint-deprecated
+
+⚠️ **DEPRECATED**
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "groupId": "@{body('Parse_JSON')?['groupId']}",
+  "sender":"noreply@email.com",
+  "receivers":"joe@email.com;Jannet@email.com",
+  "subject":"Test message",
+  "emailbody":"This is a test message"
+ "emailbodyHMTLpath": "/sites/SampleTeamSite/Emailtemplates/emailtemplate.html", #optional
+ "HTMLFileSiteUrl": "https://tcwlv.sharepoint.com/sites/SampleTeamSite/" #optional
+}
+```
+
+---
+
 ## RemovePageBanner
 
 **Version:** 1.0 | 
@@ -421,6 +450,52 @@ Configures the number of days before external users are automatically removed fr
 {
   "siteUrl": "https://fmdkbdkdev01.sharepoint.com/sites/2406A",
     "numberOfDays": 30
+}
+```
+
+---
+
+## RemoveM365GroupOwner
+
+✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "groupId": "@{body('Parse_JSON')?['groupId']}",
+  "OwnerUPN": "admin@contoso.com",  #only required for private and shared channels
+}
+```
+
+---
+
+## NewTenantSite
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "sitetemplate": "STS#0",
+  "title": "Fellowmind test site",
+  "SPOAdminUrl": "https://tcwlv-admin.sharepoint.com",
+  "language" : 1033,
+  "timeZone" : 3,
+  "siteDesign" : "Topic",
+  "siteCollectionAdmin" : "ProActiveAdmin@AmpelmannOperations.onmicrosoft.com",
+  "requestedsiteUrl" : "https://tcwlv.sharepoint.com/sites/FellowmindTestSite"
 }
 ```
 
@@ -740,6 +815,32 @@ Updates the description of a column in a SharePoint list. This is useful when yo
 
 ---
 
+## UpdateIAGExtensionLogItem
+
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "item": 
+        {
+            "Title": "Test from function",
+            "siteUrl": "/teams/ANL10636",
+            "HubId": "b5f6c8e3-4f3e-4c2b-8f7d-1a2b3c4d5e6f",
+            "Status": "Started",
+            "Message": "Starting the process"
+            
+        }
+}
+```
+
+---
+
 ## UpdateCalculatedFieldFormula
 
 
@@ -1035,6 +1136,26 @@ Exemple 2
 
 ---
 
+## SetSiteAdmins
+
+**Version:** 1.0 | 
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+   "SiteCollectionAdmins":"AdeleV@tcwlv.onmicrosoft.com;AlexW@tcwlv.onmicrosoft.com;c:0t.c|tenant|8b717b8f-4274-419e-a95f-c27246d80d65",
+    "SiteUrl" :"https://tcwlv.sharepoint.com/sites/PnPModernSearch",
+    "RemoveExistingAdmins": false
+}
+```
+
+---
+
 ## SetRegionalSettings
 
 
@@ -1176,6 +1297,28 @@ Change the nick name of Microsoft 365 Group by changing the email alias
 
 ---
 
+## SetM365EmailProperties
+
+✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "groupId": "@{body('Parse_JSON')?['groupId']}",
+  "EmailDomain": "ekj.dk",
+  "HideFromOutlookClients" : 0
+  "HideFromAddressLists" : 0
+}
+```
+
+---
+
 ## SetLogo
 
 **Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
@@ -1224,6 +1367,24 @@ Configures the maximum number of major versions to retain for documents in a Sha
   "ListNameAndNumber": "Shared Documents;100",
   "groupId": "6ea81a76-ab55-4aa2-9e5e-4c4d34ee5b58",
   "siteUrl": "https://contoso.sharepoint.com/sites/Collab-000005" #optional bypasses the site from the group
+}
+```
+
+---
+
+## GetPnPConnection
+
+**Version:** 1.0 | 
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl" :"https://contoso.sharepoint.com/sites/contoso"
 }
 ```
 
@@ -1351,6 +1512,27 @@ The InternalNamesDictionary is a JSON structure that maps GUIDs to their corresp
       "AutofillInfo": {""LLM"":{""IsEnabled"":true,""Prompt"":""extract the location of the invoice, it is usually in the top right hand corner, match the location to the terms in the termset and set the term id"",""CustomModelId"":null,""CustomParametersJson"":null,""AnalyzeImageWithVision"":false,""AnalyzeImageDetailLevel"":null,""AutofillColumnType"":""Unknown""},""PrebuiltModel"":null}
     }
   ]
+}
+```
+
+---
+
+## AddTerm
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "termGroupID": "23947be5-0d03-40e3-b1a0-0b87dc3183c2",
+    "termSetID": "63d628bb-2cc5-4900-86a6-e8c42e3b9554",
+    "termLabel": "HR3"
 }
 ```
 
@@ -1507,6 +1689,73 @@ HttpStatusCode 208 : the user exists allready
 
 ---
 
+## AddIAGExtensionLogItem
+
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "item": 
+        {
+            "Title": "Test from function",
+            "siteUrl": "https://banedanmarkonline.sharepoint.com/teams/ANL10636",
+            "HubId": "b5f6c8e3-4f3e-4c2b-8f7d-1a2b3c4d5e6f",
+            "Status": "Started",
+            "Message": "Starting the process",
+            "Template": "Template from function"
+        }
+    
+}
+```
+
+---
+
+## ApplyPnPTemplate
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "PnPTemplateURL":"https://tcwlv.sharepoint.com/sites/SampleTeamSite/Shared%20Documents/basetemplate2.pnp",
+    "siteUrl":"the site url" 
+}
+```
+
+---
+
+## AddGroupOwnersAsChannelOwners
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "groupId": "@{body('Parse_JSON')?['groupId']}",
+  "ChannelDisplayName": "test"
+}
+```
+
+---
+
 ## AddFoldersToLibraryInBatch -deprecated
 
 ⚠️ **DEPRECATED**
@@ -1619,6 +1868,29 @@ OR
 
 ---
 
+## AddCustomActionToGearmenu
+
+**Version:** 1.0 | 
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl":"https://contoso.sharepoint.com/sites/OP-1604C-test",
+  "CustomActionUrl" : "https://banedanmarkonline.sharepoint.com/sites/itworkspaces/Pages/BanedanmarkFunctions.aspx?projectSiteUrl=https://banedanmarkonline.sharepoint.com/sites/TRA12715&wsDefinition=bdkbusinesssiteDK",
+    "Scope" : "Web",
+    "Label" : "BDK-funktioner"	,
+    "BasePermission" : "ManageWeb",
+    "InternalName" : "BDKFunction"
+}
+```
+
+---
+
 ## AddColumnFormatting
 
 **Version:** 1.0 | 
@@ -1691,6 +1963,27 @@ for a list of features
 
 ---
 
+## aa_TestConnection
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+
+    "siteUrl" :"https://contoso.sharepoint.com/sites/contoso",  
+    "userAssignedManagedIdentityClientId": "b50e3104-6812-424f-a011-cc90e6327318" 
+}
+```
+
+---
+
 ## AddFunctionToGearmenu -deprecated
 
 ⚠️ **DEPRECATED**
@@ -1713,6 +2006,30 @@ A longer description of the function, its purpose, common use cases, etc.
     "Label" : "BDK-funktioner"	,
     "BasePermission" : "ManageWeb",
     "InternalName" : "BDKFunction"
+}
+```
+
+---
+
+## ApplyPnPTemplateFromXML
+
+**Version:** 1.0 | 
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "PnPXMLTempleatePath": "/pnpprovisioningfiles/lists/Correspondence.xml",
+    "PnPXMLTempleateSitePath": "https://fmdkbdkdev01.sharepoint.com/sites/spoiagadminsite",
+    "siteUrl": "https://fmdkbdkdev01.sharepoint.com/sites/SAM-10003-PRJ",
+    "Parameters": {        
+            "IAGxListTitle": "Projects",
+            "IAGxListUrl": "ProjectsLinks"
+        }
 }
 ```
 
@@ -1787,6 +2104,29 @@ Traverses the folder structure under the given first-level folder and sets the d
 
 ---
 
+## EviDocCopyFolders
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl": "https://tenant.sharepoint.com/sites/DestinationSite",
+  "sourceSiteUrl": "https://tenant.sharepoint.com/sites/SourceSite",
+  "libraryName": "Documents",
+  "firstLevelFolderName": "FolderA",
+  colorHex: 11 #optional, default is 11 (Green)
+}
+```
+
+---
+
 ## EnableDisableGridEditingOnList
 
 **Version:** 1.0 | 
@@ -1833,6 +2173,25 @@ This Azure Function will disable the Web Template Gallery picker that pops up th
 {
     "siteUrl":"https://contoso.sharepoint.com/sites/OP-1604C-test"
 }
+```
+
+---
+
+## DisableSocialBarOnSitePages
+
+✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{   
+    "SiteUrl" : "https://contoso.sharepoint.com/sites/contoso"    
+    }
 ```
 
 ---
@@ -2278,6 +2637,25 @@ This function supports Managed Identity and App Only connections
 {
     "siteUrl": "https://contoso.sharepoint.com/sites/DestinationSite",
     "SourceUrl": "https://contoso.sharepoint.com/sites/SourceSite"
+}
+```
+
+---
+
+## AreContentTypesFromHubReady
+
+
+### 📖 Description
+
+
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl" :"https://contoso.sharepoint.com/sites/contoso",  
+  "ContentTypes": "0x0101;0x01"
 }
 ```
 
