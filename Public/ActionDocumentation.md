@@ -277,7 +277,9 @@ This function supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-This function sets the default column value on a list column from a taxonomy term
+Sets the default value of a managed metadata field on the specified SharePoint list or library.
+    When FolderName is provided the default is scoped to that folder, and the value must be supplied
+    in the expected taxonomy path format.
 
 ### 💡 Examples
 
@@ -348,21 +350,24 @@ Precondition: the GetIAGMetadataTags function must be called first to get the me
 
 ⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
 
-A longer description of the function, its purpose, common use cases, etc.
+Sets the default value for a field on the specified SharePoint list or library. When FolderName
+    is provided, the default is applied only to that folder; otherwise it is applied at the list level.
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-example 1
 {
   "Field": "search_TextFieldSingle",
   "FieldValue": "test",
   "ListName": "Shared Documents",  
   "siteUrl": "URL"
     }
-example 2
-    {
+```
+
+**Example 2**
+```powershell
+{
   "Field": "search_TextFieldSingle",
   "FieldValue": "test",
   "ListName": "Shared Documents",  
@@ -383,7 +388,8 @@ example 2
 
 ⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
 
-
+Sends an email to one or more recipients for the supplied Microsoft 365 group. The message body
+    can be plain text or loaded from an HTML template stored in SharePoint.
 
 ### 💡 Examples
 
@@ -583,20 +589,19 @@ Creates a new Microsoft 365 Group with specified properties. Optionally adds own
 
 ## InstallAppToTeam
 
-**Version:** 1.0 | 
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
 ### 📖 Description
 
 Installs a new app to a team
-This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-1
 {
 "groupId" :"add6c948-e3e7-4570-8d08-fcf44845fe38",
-"AppID" :"",
+"AppID" :"com.microsoft.teamspace.tab.web",
 ```
 
 ---
@@ -820,7 +825,9 @@ Updates the description of a column in a SharePoint list. This is useful when yo
 
 ### 📖 Description
 
-
+Updates an existing IAG Extension log entry by locating it through the siteUrl field and applying
+    the properties from Request.Body.item to the matching list item. The action fails if no item, or
+    more than one item, matches the supplied siteUrl.
 
 ### 💡 Examples
 
@@ -1141,7 +1148,9 @@ Exemple 2
 **Version:** 1.0 | 
 ### 📖 Description
 
-
+Adds the supplied users or principals as site collection administrators on the target site. When
+    RemoveExistingAdmins is true, the current site collection administrators are removed before the
+    new set is applied.
 
 ### 💡 Examples
 
@@ -1281,7 +1290,9 @@ Changes the default permission level for the site's Members group from Edit to C
 
 ### 📖 Description
 
-Change the nick name of Microsoft 365 Group by changing the email alias
+Builds a new primary SMTP address for the specified Microsoft 365 group by combining the existing
+    alias with the requested EmailDomain, then updates the group in Exchange Online using the provided
+    tenant context.
 
 ### 💡 Examples
 
@@ -1303,7 +1314,8 @@ Change the nick name of Microsoft 365 Group by changing the email alias
 
 ### 📖 Description
 
-
+Changes the group's email alias domain and updates the HideFromOutlookClients and
+    HideFromAddressLists visibility settings in Exchange Online for the specified Microsoft 365 group.
 
 ### 💡 Examples
 
@@ -1377,7 +1389,8 @@ Configures the maximum number of major versions to retain for documents in a Sha
 **Version:** 1.0 | 
 ### 📖 Description
 
-
+Connects to the supplied SharePoint site through the shared helper module and returns connection
+    details for downstream callers. The response currently includes the access token and resolved site URL.
 
 ### 💡 Examples
 
@@ -1606,7 +1619,8 @@ Creates one or more new SharePoint groups on a site and assigns the specified pe
 
 ### 📖 Description
 
-A longer description of the function, its purpose, common use cases, etc.
+Creates a new Microsoft Planner plan for the supplied group and site context. If Buckets are
+    provided in the request body, the action also creates those buckets after the plan is created.
 
 ### 💡 Examples
 
@@ -1632,6 +1646,7 @@ A longer description of the function, its purpose, common use cases, etc.
 
 ## AddNewFieldFromXML
 
+✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
@@ -1649,7 +1664,6 @@ HttpStatusCode 500 : Internal server error
 
 **Example 1**
 ```powershell
-Add field to a list/library
 {
     "siteUrl": "https://contoso.sharepoint.com/sites/project-x",
     "ListName": "Shared Documents",
@@ -1659,7 +1673,6 @@ Add field to a list/library
 
 **Example 2**
 ```powershell
-Add site column from XML (no ListName)
 {
     "siteUrl": "https://contoso.sharepoint.com/sites/project-x",
     "FieldXml": "<Field Type='Text' Name='ProjectCode' DisplayName='Project Code' Group='Custom Columns' />"
@@ -1694,7 +1707,9 @@ HttpStatusCode 208 : the user exists allready
 
 ### 📖 Description
 
-
+Creates a log item in the IAG Extension log by mapping the properties in Request.Body.item
+    to SharePoint list columns. If an item with the same siteUrl already exists, the action skips
+    creation instead of inserting a duplicate entry.
 
 ### 💡 Examples
 
@@ -1722,7 +1737,9 @@ HttpStatusCode 208 : the user exists allready
 
 ### 📖 Description
 
-
+Applies a .pnp template to the target site. The template path can be absolute or tenant-relative,
+    and the function temporarily disables NoScript before provisioning and restores the setting when
+    the template application is complete.
 
 ### 💡 Examples
 
@@ -1873,7 +1890,9 @@ OR
 **Version:** 1.0 | 
 ### 📖 Description
 
-
+Adds a custom action to the standard SharePoint settings menu for the target site or web.
+    The function temporarily handles the NoScript requirement on the site, creates the custom
+    action with the supplied label, permission, and URL, and restores the site setting afterwards.
 
 ### 💡 Examples
 
@@ -1969,7 +1988,9 @@ for a list of features
 
 ### 📖 Description
 
-
+Validates that the function app can connect to the target SharePoint site with managed identity.
+    The action supports both system-assigned and user-assigned identities and reports whether list
+    retrieval succeeds.
 
 ### 💡 Examples
 
@@ -1994,7 +2015,8 @@ for a list of features
 
 ⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
 
-A longer description of the function, its purpose, common use cases, etc.
+Legacy version of the gear menu helper. It adds a custom action for the target site or web
+    using the supplied label, permission, and internal name, and is kept for backward compatibility.
 
 ### 💡 Examples
 
@@ -2016,7 +2038,9 @@ A longer description of the function, its purpose, common use cases, etc.
 **Version:** 1.0 | 
 ### 📖 Description
 
-
+Loads a PnP provisioning XML file from the specified source site and applies it to the target
+    site. Optional template parameters can be supplied in the request body to customize the
+    provisioning run.
 
 ### 💡 Examples
 
@@ -2051,13 +2075,11 @@ This function will apply the metadata to the site by adding the metadata to the 
 
 **Example 1**
 ```powershell
-Test-MyTestFunction -Verbose
-    Explanation of the function or its result. You can include multiple examples with additional
-```
-
-**Example 2**
-```powershell
-lines
+{
+    "groupId": "77e4df47-2c32-4c7b-a6a3-beca9b674e07",
+    "targetKey": "ProjectCode",
+    "targetValue": "PRJ-10025"
+}
 ```
 
 ---
@@ -2183,7 +2205,8 @@ This Azure Function will disable the Web Template Gallery picker that pops up th
 
 ### 📖 Description
 
-
+Turns off the social bar and page comments on SharePoint site pages for the target site. This is
+    useful when the site should not allow likes, comments, or similar page interactions.
 
 ### 💡 Examples
 
@@ -2330,8 +2353,9 @@ This function supports Managed Identity and App Only connections
 
 ⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
 
-This Azure Function will delete content types from a list
-THis is often useful when you add another Content type to a list and you want to remove the old one
+Deletes one or more content types from the specified SharePoint list or library. The target site
+    can be resolved directly from siteUrl or indirectly from the Microsoft 365 group when only groupId
+    is provided.
 
 ### 💡 Examples
 
@@ -2381,7 +2405,8 @@ This function supports Managed Identity and App Only connections
 
 ## CreateM365TeamsTab_SharePointPageAndList
 
-**Version:** 1.1 | 
+**Version:** 1.1 | ✅ Supports Managed Identity and App Only connections
+
 ### 📖 Description
 
 Creates a new tab in a Microsoft Teams channel that displays either a SharePoint page or list. 
@@ -2391,14 +2416,11 @@ Creates a new tab in a Microsoft Teams channel that displays either a SharePoint
     HttpStatusCode 200 : Tab successfully created
     HttpStatusCode 400 : Missing required parameters or invalid tabType
     HttpStatusCode 500 : Internal server error
-    
-This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-1  default frontpage
 {
   "channelName": "General", 
   "groupId": "99f74374-63fd-4aff-9579-d105ce3f0a8d",
@@ -2412,7 +2434,6 @@ This function supports Managed Identity and App Only connections
 
 **Example 2**
 ```powershell
-1  specific page
 {
   "channelName": "General", 
   "groupId": "99f74374-63fd-4aff-9579-d105ce3f0a8d",
@@ -2488,7 +2509,8 @@ This function supports Managed Identity and App Only connections
 
 ## CreateM365TeamsTab_DocumentLibrary
 
-**Version:** 1.0 | 
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
 ### 📖 Description
 
 Creates a new tab in a Microsoft Teams channel that displays a SharePoint document library. 
@@ -2498,14 +2520,11 @@ Creates a new tab in a Microsoft Teams channel that displays a SharePoint docume
     HttpStatusCode 200 : Tab successfully created
     HttpStatusCode 400 : Missing required parameters or invalid tabType
     HttpStatusCode 500 : Internal server error
-    
-This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-1
 {
 "groupId" :"add6c948-e3e7-4570-8d08-fcf44845fe38",
 "channelName" :"General",
@@ -2551,6 +2570,7 @@ This function supports Managed Identity and App Only connections
 
 ## CreateM365TeamsTab
 
+✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
@@ -2561,14 +2581,11 @@ Creates a new tab in a Microsoft Teams channel. Supports multiple tab types incl
     HttpStatusCode 200 : Tab successfully created
     HttpStatusCode 400 : Missing required parameters or invalid tabType
     HttpStatusCode 500 : Internal server error
-    
-This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-1
 {
 "groupId" :"add6c948-e3e7-4570-8d08-fcf44845fe38",
 "channelName" :"General",
@@ -2583,7 +2600,6 @@ contentUrl = "https://www.fellowmind.com/"
 
 **Example 2**
 ```powershell
-2
 {
 "groupId" :"add6c948-e3e7-4570-8d08-fcf44845fe38",
 "channelName" :"General",
@@ -2594,7 +2610,6 @@ contentUrl = "https://www.fellowmind.com/"
 
 **Example 3**
 ```powershell
-3
 {
 "groupId" :"add6c948-e3e7-4570-8d08-fcf44845fe38",
 "channelName" :"General",
@@ -2608,7 +2623,6 @@ contentUrl = "https://www.fellowmind.com/"
 
 **Example 4**
 ```powershell
-4
 {
   "channelName": "testB",
   "groupId": "b434a167-2dc6-420f-92e1-fa5701998a0c",
@@ -2647,7 +2661,8 @@ This function supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-
+Verifies that the supplied content type IDs have been synchronized from the content type hub to
+     the target site. The action fails if any requested content type cannot be found.
 
 ### 💡 Examples
 
@@ -2708,19 +2723,18 @@ for a list of features
 
 ### 📖 Description
 
-This function updates a specific field in a listitem in a list.
+Updates a single field on the configured portal list for the specified PortalListItemId. Use this
+    action to write status or metadata changes back to the portal item without updating the full record.
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
-Test-MyTestFunction -Verbose
-    Explanation of the function or its result. You can include multiple examples with additional
-```
-
-**Example 2**
-```powershell
-lines
+{
+  "PortalListItemId": 42,
+  "FieldToUpdate": "Status",
+  "FieldValue": "Provisioned"
+}
 ```
 
 

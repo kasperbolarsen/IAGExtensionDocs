@@ -347,7 +347,7 @@
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>A longer description of the function, its purpose, common use cases, etc.</p>
+    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>Legacy version of the gear menu helper. It adds a custom action for the target site or web<br>    using the supplied label, permission, and internal name, and is kept for backward compatibility.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;siteUrl&quot;:&quot;https://contoso.sharepoint.com/sites/OP-1604C-test&quot; 
     &quot;Scope&quot; : &quot;Web&quot;,
@@ -363,7 +363,7 @@
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Validates that the function app can connect to the target SharePoint site with managed identity.<br>    The action supports both system-assigned and user-assigned identities and reports whether list<br>    retrieval succeeds.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
 
     &quot;siteUrl&quot; :&quot;https://contoso.sharepoint.com/sites/contoso&quot;,  
@@ -417,7 +417,7 @@
         <span class='badge badge-version'>Version 1.0</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Adds a custom action to the standard SharePoint settings menu for the target site or web.<br>    The function temporarily handles the NoScript requirement on the site, creates the custom<br>    action with the supplied label, permission, and URL, and restores the site setting afterwards.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;siteUrl&quot;:&quot;https://contoso.sharepoint.com/sites/OP-1604C-test&quot;,
   &quot;CustomActionUrl&quot; : &quot;https://banedanmarkonline.sharepoint.com/sites/itworkspaces/Pages/BanedanmarkFunctions.aspx?projectSiteUrl=https://banedanmarkonline.sharepoint.com/sites/TRA12715&amp;wsDefinition=bdkbusinesssiteDK&quot;,
@@ -490,7 +490,7 @@ OR
         <span class='badge badge-version'>Version 1.0</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Loads a PnP provisioning XML file from the specified source site and applies it to the target<br>    site. Optional template parameters can be supplied in the request body to customize the<br>    provisioning run.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;PnPXMLTempleatePath&quot;: &quot;/pnpprovisioningfiles/lists/Correspondence.xml&quot;,
     &quot;PnPXMLTempleateSitePath&quot;: &quot;https://fmdkbdkdev01.sharepoint.com/sites/spoiagadminsite&quot;,
@@ -526,7 +526,7 @@ OR
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Applies a .pnp template to the target site. The template path can be absolute or tenant-relative,<br>    and the function temporarily disables NoScript before provisioning and restores the setting when<br>    the template application is complete.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;PnPTemplateURL&quot;:&quot;https://tcwlv.sharepoint.com/sites/SampleTeamSite/Shared%20Documents/basetemplate2.pnp&quot;,
     &quot;siteUrl&quot;:&quot;the site url&quot; 
@@ -537,7 +537,7 @@ OR
     <div class="function-meta">
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Creates a log item in the IAG Extension log by mapping the properties in Request.Body.item<br>    to SharePoint list columns. If an item with the same siteUrl already exists, the action skips<br>    creation instead of inserting a duplicate entry.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;item&quot;: 
         {
@@ -567,16 +567,15 @@ OR
 <div class="function-card" id="addnewfieldfromxml">
     <h2>AddNewFieldFromXML</h2>
     <div class="function-meta">
+        <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
     <p>AddNewFieldFromXML wraps Add-PnPFieldFromXml and is intended for adding fields,<br>especially calculated fields, to lists, libraries, or as site columns.<br><br>This function supports Managed Identity and App Only connections.<br><br>HttpStatusCode 200 : Field successfully added<br>HttpStatusCode 208 : Field already exists<br>HttpStatusCode 400 : Missing required parameters or invalid FieldXml<br>HttpStatusCode 500 : Internal server error</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>Add field to a list/library
-{
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;siteUrl&quot;: &quot;https://contoso.sharepoint.com/sites/project-x&quot;,
     &quot;ListName&quot;: &quot;Shared Documents&quot;,
     &quot;FieldXml&quot;: &quot;&lt;Field ID=&#39;{62d09286-f0bc-45ab-bf14-111ca63627f5}&#39; Type=&#39;Calculated&#39; Name=&#39;PP_TaskReleaseSuccess&#39; StaticName=&#39;PP_TaskReleaseSuccess&#39; DisplayName=&#39;Release Success&#39; ResultType=&#39;Text&#39;&gt;&lt;Formula&gt;&lt;![CDATA[=IF(AND([Spec released RFC]&lt;[Deadline Spec RFC],[Spec released RFC]&gt;DATE(2009,6,9)),&#39;Success&#39;,&#39;&#39;)]]&gt;&lt;/Formula&gt;&lt;/Field&gt;&quot;
-}</code></pre><p><strong>Example 2</strong></p><pre><code>Add site column from XML (no ListName)
-{
+}</code></pre><p><strong>Example 2</strong></p><pre><code>{
     &quot;siteUrl&quot;: &quot;https://contoso.sharepoint.com/sites/project-x&quot;,
     &quot;FieldXml&quot;: &quot;&lt;Field Type=&#39;Text&#39; Name=&#39;ProjectCode&#39; DisplayName=&#39;Project Code&#39; Group=&#39;Custom Columns&#39; /&gt;&quot;
 }</code></pre>
@@ -588,7 +587,7 @@ OR
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>A longer description of the function, its purpose, common use cases, etc.</p>
+    <p>Creates a new Microsoft Planner plan for the supplied group and site context. If Buckets are<br>    provided in the request body, the action also creates those buckets after the plan is created.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;groupId&quot;: &quot;groupId&quot;,
     &quot;siteName&quot;: &quot;siteName&quot;,
@@ -719,8 +718,11 @@ OR
     </div>
     <h3>📖 Description</h3>
     <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>This function will apply the metadata to the site by adding the metadata to the property bag of the site</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>Test-MyTestFunction -Verbose
-    Explanation of the function or its result. You can include multiple examples with additional</code></pre><p><strong>Example 2</strong></p><pre><code>lines</code></pre>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
+    &quot;groupId&quot;: &quot;77e4df47-2c32-4c7b-a6a3-beca9b674e07&quot;,
+    &quot;targetKey&quot;: &quot;ProjectCode&quot;,
+    &quot;targetValue&quot;: &quot;PRJ-10025&quot;
+}</code></pre>
 </div>
 <div class="function-card" id="evidocsetcolumndefaultvalues">
     <h2>EviDocSetColumnDefaultValues</h2>
@@ -752,7 +754,7 @@ OR
     <div class="function-meta">
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Verifies that the supplied content type IDs have been synchronized from the content type hub to<br>     the target site. The action fails if any requested content type cannot be found.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;siteUrl&quot; :&quot;https://contoso.sharepoint.com/sites/contoso&quot;,  
   &quot;ContentTypes&quot;: &quot;0x0101;0x01&quot;
@@ -773,11 +775,11 @@ OR
 <div class="function-card" id="createm365teamstab">
     <h2>CreateM365TeamsTab</h2>
     <div class="function-meta">
+        <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>Creates a new tab in a Microsoft Teams channel. Supports multiple tab types including <br>    DocumentLibrary, SharePointPageAndList, OneNote, Planner, and WebSite. This is a generic <br>    function that routes to the appropriate specialized tab creation logic based on the tabType parameter.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error<br>    <br>This function supports Managed Identity and App Only connections</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>1
-{
+    <p>Creates a new tab in a Microsoft Teams channel. Supports multiple tab types including <br>    DocumentLibrary, SharePointPageAndList, OneNote, Planner, and WebSite. This is a generic <br>    function that routes to the appropriate specialized tab creation logic based on the tabType parameter.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
 &quot;groupId&quot; :&quot;add6c948-e3e7-4570-8d08-fcf44845fe38&quot;,
 &quot;channelName&quot; :&quot;General&quot;,
 &quot;siteUrl&quot;: &quot;https://tcwlv.sharepoint.com/sites/Azure-undefined-000025-testB/&quot;,  #for lists and libraries
@@ -786,14 +788,12 @@ OR
 &quot;targetLibraryUrl&quot;:&quot;https://tcwlv.sharepoint.com/sites/KOMBITTARGETSITE/Shared%20Documents&quot;
 OR 
 contentUrl = &quot;https://www.fellowmind.com/&quot;
-}</code></pre><p><strong>Example 2</strong></p><pre><code>2
-{
+}</code></pre><p><strong>Example 2</strong></p><pre><code>{
 &quot;groupId&quot; :&quot;add6c948-e3e7-4570-8d08-fcf44845fe38&quot;,
 &quot;channelName&quot; :&quot;General&quot;,
 &quot;tabName&quot;:&quot;Test Library link&quot;,
 &quot;tabType&quot;:&quot;OneNote&quot;
-}</code></pre><p><strong>Example 3</strong></p><pre><code>3
-{
+}</code></pre><p><strong>Example 3</strong></p><pre><code>{
 &quot;groupId&quot; :&quot;add6c948-e3e7-4570-8d08-fcf44845fe38&quot;,
 &quot;channelName&quot; :&quot;General&quot;,
 &quot;tabName&quot;:&quot;Test Library link&quot;,
@@ -801,8 +801,7 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
 &quot;PlannerName&quot; :&quot;My Planner&quot; #the name of the planner plan
 &quot;TenantName&quot;: &quot;tcwlv.onmicrosoft.com&quot;
 
-}</code></pre><p><strong>Example 4</strong></p><pre><code>4
-{
+}</code></pre><p><strong>Example 4</strong></p><pre><code>{
   &quot;channelName&quot;: &quot;testB&quot;,
   &quot;groupId&quot;: &quot;b434a167-2dc6-420f-92e1-fa5701998a0c&quot;,
   &quot;tabName&quot;: &quot;local Library link&quot;,
@@ -832,11 +831,11 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
     <h2>CreateM365TeamsTab_DocumentLibrary</h2>
     <div class="function-meta">
         <span class='badge badge-version'>Version 1.0</span>
+        <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>Creates a new tab in a Microsoft Teams channel that displays a SharePoint document library. <br>    The tab provides direct access to the specified library within the Teams interface, making <br>    it easy for team members to access and collaborate on documents.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error<br>    <br>This function supports Managed Identity and App Only connections</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>1
-{
+    <p>Creates a new tab in a Microsoft Teams channel that displays a SharePoint document library. <br>    The tab provides direct access to the specified library within the Teams interface, making <br>    it easy for team members to access and collaborate on documents.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
 &quot;groupId&quot; :&quot;add6c948-e3e7-4570-8d08-fcf44845fe38&quot;,
 &quot;channelName&quot; :&quot;General&quot;,
 &quot;tabName&quot;:&quot;Test Library link&quot;,
@@ -879,11 +878,11 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
     <h2>CreateM365TeamsTab_SharePointPageAndList</h2>
     <div class="function-meta">
         <span class='badge badge-version'>Version 1.1</span>
+        <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>Creates a new tab in a Microsoft Teams channel that displays either a SharePoint page or list. <br>    Can point to the default frontpage or a specific page. Requires the SharePoint site URL, <br>    list name, and page content URL.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error<br>    <br>This function supports Managed Identity and App Only connections</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>1  default frontpage
-{
+    <p>Creates a new tab in a Microsoft Teams channel that displays either a SharePoint page or list. <br>    Can point to the default frontpage or a specific page. Requires the SharePoint site URL, <br>    list name, and page content URL.<br>    <br>    HttpStatusCode 200 : Tab successfully created<br>    HttpStatusCode 400 : Missing required parameters or invalid tabType<br>    HttpStatusCode 500 : Internal server error</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;channelName&quot;: &quot;General&quot;, 
   &quot;groupId&quot;: &quot;99f74374-63fd-4aff-9579-d105ce3f0a8d&quot;,
   &quot;tabName&quot;: &quot;test&quot;,
@@ -891,8 +890,7 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
   &quot;siteUrl&quot;: &quot;https://tcwlv.sharepoint.com/sites/Azure-undefined-000025-testB/&quot;,
   &quot;ListName&quot;: &quot;something&quot;,
   &quot;pageContentUrl&quot;: &quot;https://tcwlv.sharepoint.com/sites/Azure-undefined-000026/&quot;  
-}</code></pre><p><strong>Example 2</strong></p><pre><code>1  specific page
-{
+}</code></pre><p><strong>Example 2</strong></p><pre><code>{
   &quot;channelName&quot;: &quot;General&quot;, 
   &quot;groupId&quot;: &quot;99f74374-63fd-4aff-9579-d105ce3f0a8d&quot;,
   &quot;tabName&quot;: &quot;test&quot;,
@@ -1011,7 +1009,7 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Turns off the social bar and page comments on SharePoint site pages for the target site. This is<br>    useful when the site should not allow likes, comments, or similar page interactions.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{   
     &quot;SiteUrl&quot; : &quot;https://contoso.sharepoint.com/sites/contoso&quot;    
     }</code></pre>
@@ -1064,7 +1062,7 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>This Azure Function will delete content types from a list<br>THis is often useful when you add another Content type to a list and you want to remove the old one</p>
+    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>Deletes one or more content types from the specified SharePoint list or library. The target site<br>    can be resolved directly from siteUrl or indirectly from the Microsoft 365 group when only groupId<br>    is provided.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;groupId&quot;: &quot;77e4df47-2c32-4c7b-a6a3-beca9b674e07&quot;,
   &quot;siteName&quot;: &quot;test&quot;,
@@ -1190,13 +1188,13 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
     <h2>InstallAppToTeam</h2>
     <div class="function-meta">
         <span class='badge badge-version'>Version 1.0</span>
+        <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>Installs a new app to a team<br>This function supports Managed Identity and App Only connections</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>1
-{
+    <p>Installs a new app to a team</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
 &quot;groupId&quot; :&quot;add6c948-e3e7-4570-8d08-fcf44845fe38&quot;,
-&quot;AppID&quot; :&quot;&quot;,</code></pre>
+&quot;AppID&quot; :&quot;com.microsoft.teamspace.tab.web&quot;,</code></pre>
 </div>
 <div class="function-card" id="newmicrosoft365group">
     <h2>NewMicrosoft365Group</h2>
@@ -1326,7 +1324,7 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br></p>
+    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>Sends an email to one or more recipients for the supplied Microsoft 365 group. The message body<br>    can be plain text or loaded from an HTML template stored in SharePoint.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;groupId&quot;: &quot;@{body(&#39;Parse_JSON&#39;)?[&#39;groupId&#39;]}&quot;,
   &quot;sender&quot;:&quot;noreply@email.com&quot;,
@@ -1344,16 +1342,13 @@ contentUrl = &quot;https://www.fellowmind.com/&quot;
         <span class='badge badge-version'>Version 1.0</span>
     </div>
     <h3>📖 Description</h3>
-    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>A longer description of the function, its purpose, common use cases, etc.</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>example 1
-{
+    <p><strong style='color: #d13438;'>⚠️ DEPRECATED - This function is deprecated and should not be used in new implementations.</strong><br><br>Sets the default value for a field on the specified SharePoint list or library. When FolderName<br>    is provided, the default is applied only to that folder; otherwise it is applied at the list level.</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;Field&quot;: &quot;search_TextFieldSingle&quot;,
   &quot;FieldValue&quot;: &quot;test&quot;,
   &quot;ListName&quot;: &quot;Shared Documents&quot;,  
   &quot;siteUrl&quot;: &quot;URL&quot;
-    }
-example 2
-    {
+    }</code></pre><p><strong>Example 2</strong></p><pre><code>{
   &quot;Field&quot;: &quot;search_TextFieldSingle&quot;,
   &quot;FieldValue&quot;: &quot;test&quot;,
   &quot;ListName&quot;: &quot;Shared Documents&quot;,  
@@ -1396,7 +1391,7 @@ example 2
     <div class="function-meta">
     </div>
     <h3>📖 Description</h3>
-    <p>This function sets the default column value on a list column from a taxonomy term</p>
+    <p>Sets the default value of a managed metadata field on the specified SharePoint list or library.<br>    When FolderName is provided the default is scoped to that folder, and the value must be supplied<br>    in the expected taxonomy path format.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;ListName&quot;: &quot;Shared Documents&quot;,
   &quot;SiteColumnInternalName&quot;:&quot;Department&quot;,
@@ -1573,7 +1568,7 @@ OR
         <span class='badge badge-version'>Version 1.0</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Connects to the supplied SharePoint site through the shared helper module and returns connection<br>    details for downstream callers. The response currently includes the access token and resolved site URL.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;siteUrl&quot; :&quot;https://contoso.sharepoint.com/sites/contoso&quot;
 }</code></pre>
@@ -1611,7 +1606,7 @@ OR
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Changes the group&#39;s email alias domain and updates the HideFromOutlookClients and<br>    HideFromAddressLists visibility settings in Exchange Online for the specified Microsoft 365 group.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;groupId&quot;: &quot;@{body(&#39;Parse_JSON&#39;)?[&#39;groupId&#39;]}&quot;,
   &quot;EmailDomain&quot;: &quot;ekj.dk&quot;,
@@ -1625,7 +1620,7 @@ OR
         <span class='badge badge-success'>✅ Supports Managed Identity</span>
     </div>
     <h3>📖 Description</h3>
-    <p>Change the nick name of Microsoft 365 Group by changing the email alias</p>
+    <p>Builds a new primary SMTP address for the specified Microsoft 365 group by combining the existing<br>    alias with the requested EmailDomain, then updates the group in Exchange Online using the provided<br>    tenant context.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
   &quot;groupId&quot;: &quot;groupId&quot;,
   &quot;EmailDomain&quot;: &quot;ekj.dk&quot;,
@@ -1700,7 +1695,7 @@ OR
         <span class='badge badge-version'>Version 1.0</span>
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Adds the supplied users or principals as site collection administrators on the target site. When<br>    RemoveExistingAdmins is true, the current site collection administrators are removed before the<br>    new set is applied.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
    &quot;SiteCollectionAdmins&quot;:&quot;AdeleV@tcwlv.onmicrosoft.com;AlexW@tcwlv.onmicrosoft.com;c:0t.c|tenant|8b717b8f-4274-419e-a95f-c27246d80d65&quot;,
     &quot;SiteUrl&quot; :&quot;https://tcwlv.sharepoint.com/sites/PnPModernSearch&quot;,
@@ -1881,7 +1876,7 @@ Exemple 2
     <div class="function-meta">
     </div>
     <h3>📖 Description</h3>
-    <p></p>
+    <p>Updates an existing IAG Extension log entry by locating it through the siteUrl field and applying<br>    the properties from Request.Body.item to the matching list item. The action fails if no item, or<br>    more than one item, matches the supplied siteUrl.</p>
     <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
     &quot;item&quot;: 
         {
@@ -1911,9 +1906,12 @@ Exemple 2
     <div class="function-meta">
     </div>
     <h3>📖 Description</h3>
-    <p>This function updates a specific field in a listitem in a list.</p>
-    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>Test-MyTestFunction -Verbose
-    Explanation of the function or its result. You can include multiple examples with additional</code></pre><p><strong>Example 2</strong></p><pre><code>lines</code></pre>
+    <p>Updates a single field on the configured portal list for the specified PortalListItemId. Use this<br>    action to write status or metadata changes back to the portal item without updating the full record.</p>
+    <h3>💡 Examples</h3><p><strong>Example 1</strong></p><pre><code>{
+  &quot;PortalListItemId&quot;: 42,
+  &quot;FieldToUpdate&quot;: &quot;Status&quot;,
+  &quot;FieldValue&quot;: &quot;Provisioned&quot;
+}</code></pre>
 </div>
 
             </div>
