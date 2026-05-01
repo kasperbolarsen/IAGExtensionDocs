@@ -1281,7 +1281,7 @@ Changes the default permission level for the site's Members group from Edit to C
 
 ### 📖 Description
 
-
+Change the nick name of Microsoft 365 Group by changing the email alias
 
 ### 💡 Examples
 
