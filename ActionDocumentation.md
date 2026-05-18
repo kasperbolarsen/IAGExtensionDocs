@@ -1,6 +1,6 @@
 # IA Governance Extension - Function Library
 
-**Last Updated:** 01-05-2026 | **Version:** 2.0 | **Scope:** Generic Functions Only
+**Last Updated:** 18-05-2026 | **Version:** 2.0 | **Scope:** Generic Functions Only
 
 > This documentation provides comprehensive information about all available functions and actions in the IA Governance Extension library.
 
@@ -33,6 +33,7 @@
 - [SetRegionalSettings](#setregionalsettings)
 - [SetSiteAdmins](#setsiteadmins)
 - [SetSiteMembers](#setsitemembers)
+- [SetSiteOption](#setsiteoption)
 - [SetSiteOwners](#setsiteowners)
 - [SetSiteVisitors](#setsitevisitors)
 - [SetSPAccessRequest](#setspaccessrequest)
@@ -124,6 +125,31 @@
 - [DisableWebTemplatesGalleryFirstRunDialog](#disablewebtemplatesgalleryfirstrundialog)
 
 
+
+---
+
+## SetExternalUserExpirationInDays
+
+
+### 📖 Description
+
+Configures the number of days before external users are automatically removed from a SharePoint 
+    site. This security feature helps maintain control over external user access by requiring 
+    periodic review and renewal of external sharing.
+    
+    HttpStatusCode 200 : Expiration period successfully set
+    HttpStatusCode 400 : Missing required parameters
+    HttpStatusCode 500 : Internal server error
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl": "https://fmdkbdkdev01.sharepoint.com/sites/2406A",
+    "numberOfDays": 30
+}
+```
 
 ---
 
@@ -408,6 +434,24 @@ Sends an email to one or more recipients for the supplied Microsoft 365 group. T
 
 ---
 
+## SetHeaderTitleVisibility
+
+**Version:** 1.0 | 
+### 📖 Description
+
+This is a workaround as this should be in the site provisioning template but the template is of an older version
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl": "https://contoso.sharepoint.com/sites/contoso"
+}
+```
+
+---
+
 ## RemovePageBanner
 
 **Version:** 1.0 | 
@@ -436,48 +480,16 @@ This function supports Managed Identity and App Only connections
 
 ---
 
-## SetExternalUserExpirationInDays
+## ReadFromCreateQueueAndStartFlow
 
-
-### 📖 Description
-
-Configures the number of days before external users are automatically removed from a SharePoint 
-    site. This security feature helps maintain control over external user access by requiring 
-    periodic review and renewal of external sharing.
-    
-    HttpStatusCode 200 : Expiration period successfully set
-    HttpStatusCode 400 : Missing required parameters
-    HttpStatusCode 500 : Internal server error
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-  "siteUrl": "https://fmdkbdkdev01.sharepoint.com/sites/2406A",
-    "numberOfDays": 30
-}
-```
-
----
-
-## RemoveM365GroupOwner
-
-✅ Supports Managed Identity and App Only connections
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-  "groupId": "@{body('Parse_JSON')?['groupId']}",
-  "OwnerUPN": "admin@contoso.com",  #only required for private and shared channels
-}
-```
+This timer-triggered function runs on a configurable schedule configured via the QueueTriggerSchedule
+    environment variable, reads messages from a storage queue (configured via QueueName env variable),
+    and calls a Logic App workflow for each message by making an HTTP POST request.
+    Uses user-assigned managed identity to authenticate with Azure Storage Queue.
 
 ---
 
@@ -691,51 +703,21 @@ HttpStatusCode 208 : the channels exists allready
 
 ---
 
-## GetSiteCollectionUrlFromGroupId
+## RemoveM365GroupOwner
 
-**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-Looks up the site collection url from the group id
+
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
 {
-  "groupId": "theGUID"
-}
-```
-
----
-
-## ReadFromCreateQueueAndStartFlow
-
-**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
-
-### 📖 Description
-
-This timer-triggered function runs on a configurable schedule configured via the QueueTriggerSchedule
-    environment variable, reads messages from a storage queue (configured via QueueName env variable),
-    and calls a Logic App workflow for each message by making an HTTP POST request.
-    Uses user-assigned managed identity to authenticate with Azure Storage Queue.
-
----
-
-## SetHeaderTitleVisibility
-
-**Version:** 1.0 | 
-### 📖 Description
-
-This is a workaround as this should be in the site provisioning template but the template is of an older version
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-  "siteUrl": "https://contoso.sharepoint.com/sites/contoso"
+  "groupId": "@{body('Parse_JSON')?['groupId']}",
+  "OwnerUPN": "admin@contoso.com",  #only required for private and shared channels
 }
 ```
 
@@ -788,6 +770,33 @@ OR
 {   
     "hubSiteUrl": "https://tcwlv.sharepoint.com/sites/HubsiteA",
     "siteUrl": "https://contoso.sharepoint.com/sites/contoso"
+}
+```
+
+---
+
+## SetLibraryVersionLimit
+
+✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+Configures the maximum number of major versions to retain for documents in a SharePoint library. 
+    This helps manage storage by limiting version history. The library name and version limit are 
+    specified as a semicolon-separated pair (e.g., "Shared Documents;100").
+    
+    HttpStatusCode 200 : Version limit successfully applied
+    HttpStatusCode 400 : Missing required parameters
+    HttpStatusCode 500 : Internal server error
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "ListNameAndNumber": "Shared Documents;100",
+  "groupId": "6ea81a76-ab55-4aa2-9e5e-4c4d34ee5b58",
+  "siteUrl": "https://contoso.sharepoint.com/sites/Collab-000005" #optional bypasses the site from the group
 }
 ```
 
@@ -1111,6 +1120,43 @@ Exemple 2
 
 ---
 
+## SetSiteOption
+
+
+### 📖 Description
+
+Accepts a site URL and any supported Set-PnPTenantSite parameters in the request body.
+    Parameters can be supplied either directly in the body or inside an options object.
+
+    HttpStatusCode 200 : Site options successfully updated
+    HttpStatusCode 400 : Missing siteUrl or no supported options were provided
+    HttpStatusCode 500 : Internal server error
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl": "https://contoso.sharepoint.com/sites/project-x",
+  "options": {
+    "IsAuthoritative": true,
+    "BlockDownloadPolicy": true,
+    "ExternalUserExpirationInDays": 30
+  }
+}
+```
+
+**Example 2**
+```powershell
+{
+  "siteUrl": "https://contoso.sharepoint.com/sites/project-x",
+  "SharingCapability": "Disabled",
+  "DefaultLinkPermission": "View"
+}
+```
+
+---
+
 ## SetSiteMembers
 
 **Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
@@ -1357,28 +1403,20 @@ Configures the site logo and thumbnail for a modern SharePoint site. If only log
 
 ---
 
-## SetLibraryVersionLimit
+## GetSiteCollectionUrlFromGroupId
 
-✅ Supports Managed Identity and App Only connections
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-Configures the maximum number of major versions to retain for documents in a SharePoint library. 
-    This helps manage storage by limiting version history. The library name and version limit are 
-    specified as a semicolon-separated pair (e.g., "Shared Documents;100").
-    
-    HttpStatusCode 200 : Version limit successfully applied
-    HttpStatusCode 400 : Missing required parameters
-    HttpStatusCode 500 : Internal server error
+Looks up the site collection url from the group id
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
 {
-  "ListNameAndNumber": "Shared Documents;100",
-  "groupId": "6ea81a76-ab55-4aa2-9e5e-4c4d34ee5b58",
-  "siteUrl": "https://contoso.sharepoint.com/sites/Collab-000005" #optional bypasses the site from the group
+  "groupId": "theGUID"
 }
 ```
 
@@ -1398,29 +1436,6 @@ Connects to the supplied SharePoint site through the shared helper module and re
 ```powershell
 {
   "siteUrl" :"https://contoso.sharepoint.com/sites/contoso"
-}
-```
-
----
-
-## UpdateMultiLineFieldToUseEnhancedRichText
-
-**Version:** 1.0 | 
-### 📖 Description
-
-Finds a list column on the specified site by internal name or display title and updates
-it from a regular multi-line text field to Enhanced Rich Text (FullHtml).
-
-This function supports Managed Identity and App Only connections.
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-    "ListName": "Long lead items",
-    "FieldName": "Comments",
-    "siteUrl": "https://fmsgsdevsite.sharepoint.com/sites/SPS-ae7"
 }
 ```
 
@@ -1446,23 +1461,46 @@ The InternalNamesDictionary is a JSON structure that maps GUIDs to their corresp
 
 ---
 
-## EviDokCopyStandardDocsIntoFolders
+## GetContentTypesFromHub
 
-**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+✅ Supports Managed Identity and App Only connections
 
 ### 📖 Description
 
-Traverses the entire folder structure in the source library and copies all files to the destination library.
-    Creates any missing folders in the destination before copying files.
+ActivateFeature is a function that will activate a feature in a site collection
+each feature is identified by a GUID and separated by a semicolon
+see https://www.technologytobusiness.com/microsoft-sharepoint/sharepoint-site-feature-id-office-365 or https://sharepointdiv.wordpress.com/2018/04/09/sharepoint-otb-features-with-guid/
+for a list of features
 
 ### 💡 Examples
 
 **Example 1**
 ```powershell
 {
-  "siteUrl": "https://tenant.sharepoint.com/sites/DestinationSite",
-  "sourceSiteUrl": "https://tenant.sharepoint.com/sites/SourceSite",
-  "libraryName": "Documents"
+  "siteUrl" :"https://contoso.sharepoint.com/sites/contoso",  
+  "ContentTypes": "0x0101;0x01"
+}
+```
+
+---
+
+## ApplyPnPTemplate
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+Applies a .pnp template to the target site. The template path can be absolute or tenant-relative,
+    and the function temporarily disables NoScript before provisioning and restores the setting when
+    the template application is complete.
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "PnPTemplateURL":"https://tcwlv.sharepoint.com/sites/SampleTeamSite/Shared%20Documents/basetemplate2.pnp",
+    "siteUrl":"the site url" 
 }
 ```
 
@@ -1731,28 +1769,6 @@ Creates a log item in the IAG Extension log by mapping the properties in Request
 
 ---
 
-## ApplyPnPTemplate
-
-**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
-
-### 📖 Description
-
-Applies a .pnp template to the target site. The template path can be absolute or tenant-relative,
-    and the function temporarily disables NoScript before provisioning and restores the setting when
-    the template application is complete.
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-    "PnPTemplateURL":"https://tcwlv.sharepoint.com/sites/SampleTeamSite/Shared%20Documents/basetemplate2.pnp",
-    "siteUrl":"the site url" 
-}
-```
-
----
-
 ## AddGroupOwnersAsChannelOwners
 
 **Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
@@ -1768,6 +1784,34 @@ Applies a .pnp template to the target site. The template path can be absolute or
 {
   "groupId": "@{body('Parse_JSON')?['groupId']}",
   "ChannelDisplayName": "test"
+}
+```
+
+---
+
+## AddFunctionToGearmenu -deprecated
+
+⚠️ **DEPRECATED**
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
+
+Legacy version of the gear menu helper. It adds a custom action for the target site or web
+    using the supplied label, permission, and internal name, and is kept for backward compatibility.
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl":"https://contoso.sharepoint.com/sites/OP-1604C-test" 
+    "Scope" : "Web",
+    "Label" : "BDK-funktioner"	,
+    "BasePermission" : "ManageWeb",
+    "InternalName" : "BDKFunction"
 }
 ```
 
@@ -2005,34 +2049,6 @@ Validates that the function app can connect to the target SharePoint site with m
 
 ---
 
-## AddFunctionToGearmenu -deprecated
-
-⚠️ **DEPRECATED**
-
-**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
-
-### 📖 Description
-
-⚠️ **DEPRECATED** - This function is deprecated and should not be used in new implementations.
-
-Legacy version of the gear menu helper. It adds a custom action for the target site or web
-    using the supplied label, permission, and internal name, and is kept for backward compatibility.
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-  "siteUrl":"https://contoso.sharepoint.com/sites/OP-1604C-test" 
-    "Scope" : "Web",
-    "Label" : "BDK-funktioner"	,
-    "BasePermission" : "ManageWeb",
-    "InternalName" : "BDKFunction"
-}
-```
-
----
-
 ## ApplyPnPTemplateFromXML
 
 **Version:** 1.0 | 
@@ -2054,6 +2070,29 @@ Loads a PnP provisioning XML file from the specified source site and applies it 
             "IAGxListTitle": "Projects",
             "IAGxListUrl": "ProjectsLinks"
         }
+}
+```
+
+---
+
+## UpdateMultiLineFieldToUseEnhancedRichText
+
+**Version:** 1.0 | 
+### 📖 Description
+
+Finds a list column on the specified site by internal name or display title and updates
+it from a regular multi-line text field to Enhanced Rich Text (FullHtml).
+
+This function supports Managed Identity and App Only connections.
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+    "ListName": "Long lead items",
+    "FieldName": "Comments",
+    "siteUrl": "https://fmsgsdevsite.sharepoint.com/sites/SPS-ae7"
 }
 ```
 
@@ -2084,12 +2123,12 @@ This function will apply the metadata to the site by adding the metadata to the 
 
 ---
 
-## ApplyTheme
+## ArchiveSiteUsingMSArchive
 
-**Version:** 1.1 | 
+**Version:** 1.0 | 
 ### 📖 Description
 
-ApplyTheme is a function that will apply a modern theme to a site collection.
+is a function that will [do somehting]
 This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
@@ -2097,8 +2136,29 @@ This function supports Managed Identity and App Only connections
 **Example 1**
 ```powershell
 {
-   "Themename" : "Red",
-  "siteUrl": "url" #optional
+  "siteUrl" : "https://contoso.sharepoint.com/sites/Custom" 
+}
+```
+
+---
+
+## EviDokCopyStandardDocsIntoFolders
+
+**Version:** 1.0 | ✅ Supports Managed Identity and App Only connections
+
+### 📖 Description
+
+Traverses the entire folder structure in the source library and copies all files to the destination library.
+    Creates any missing folders in the destination before copying files.
+
+### 💡 Examples
+
+**Example 1**
+```powershell
+{
+  "siteUrl": "https://tenant.sharepoint.com/sites/DestinationSite",
+  "sourceSiteUrl": "https://tenant.sharepoint.com/sites/SourceSite",
+  "libraryName": "Documents"
 }
 ```
 
@@ -2676,12 +2736,12 @@ Verifies that the supplied content type IDs have been synchronized from the cont
 
 ---
 
-## ArchiveSiteUsingMSArchive
+## ApplyTheme
 
-**Version:** 1.0 | 
+**Version:** 1.1 | 
 ### 📖 Description
 
-is a function that will [do somehting]
+ApplyTheme is a function that will apply a modern theme to a site collection.
 This function supports Managed Identity and App Only connections
 
 ### 💡 Examples
@@ -2689,30 +2749,8 @@ This function supports Managed Identity and App Only connections
 **Example 1**
 ```powershell
 {
-  "siteUrl" : "https://contoso.sharepoint.com/sites/Custom" 
-}
-```
-
----
-
-## GetContentTypesFromHub
-
-✅ Supports Managed Identity and App Only connections
-
-### 📖 Description
-
-ActivateFeature is a function that will activate a feature in a site collection
-each feature is identified by a GUID and separated by a semicolon
-see https://www.technologytobusiness.com/microsoft-sharepoint/sharepoint-site-feature-id-office-365 or https://sharepointdiv.wordpress.com/2018/04/09/sharepoint-otb-features-with-guid/
-for a list of features
-
-### 💡 Examples
-
-**Example 1**
-```powershell
-{
-  "siteUrl" :"https://contoso.sharepoint.com/sites/contoso",  
-  "ContentTypes": "0x0101;0x01"
+   "Themename" : "Red",
+  "siteUrl": "url" #optional
 }
 ```
 
